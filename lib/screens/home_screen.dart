@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:rm_app/screens/detail_screen.dart';
 import 'package:rm_app/services/rm_api_service.dart';
 import '../models/character.dart';
 
@@ -47,6 +48,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16)),
                     child: ListTile(
+                      onTap: () {
+                        print("Clicou no personagem: ${character.name}");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                              DetailScreen(character)
+                          )
+                        );
+                      },
                       leading: CachedNetworkImage(
                         imageUrl: character.image,
                         width: 50,
@@ -54,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fit: BoxFit.cover,
                         placeholder: (context, url) =>
                             const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => 
+                        errorWidget: (context, url, error) =>
                             const Icon(Icons.error),
                       ),
                       title: Text(character.name),
